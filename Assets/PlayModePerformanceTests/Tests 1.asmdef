@@ -1,12 +1,13 @@
 {
-    "name": "Tests1",
+    "name": "Tests_Other",
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Unity.PerformanceTesting",
         "Unity.Mathematics",
-        "Unity.Burst"
+        "Unity.Burst",
+        "Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
