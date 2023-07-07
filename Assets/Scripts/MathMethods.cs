@@ -4,7 +4,7 @@ using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
-[BurstCompile]
+[BurstCompile(CompileSynchronously = true)]
 public static class MathMethods
 {
     public static void BasicMath_Default(ref Vector3 output)
@@ -32,8 +32,9 @@ public static class MathMethods
             output *= math.sqrt(output.x);
         }
     }
-
-    [BurstCompile]
+    
+    
+    [BurstCompile(CompileSynchronously = true)]
     public static void BasicMath_BurstedNewMath(ref float3 output)
     {
         for (int i = 0; i < 10_000; i++)
