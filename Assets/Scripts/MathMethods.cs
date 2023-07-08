@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -11,12 +12,29 @@ public static class MathMethods
     {
         for (int i = 0; i < 10_000; i++)
         {
-            var x = Vector3.Normalize(output);
-            output += x;
-            x -= output;
-            output *= x.x;
-            output /= Mathf.PI;
-            output *= Mathf.Sqrt(output.x);
+            output = output.normalized;
+            // var x = Vector3.Normalize(output);
+            // output += x;
+            // x -= output;
+            // output *= x.x;
+            // output /= Mathf.PI;
+            // output *= Mathf.Sqrt(output.x);
+        }
+    }
+    
+    [BurstCompile]
+    public static void BasicMath_BurstedNewMath(ref float3 output)
+    {
+        for (int i = 0; i < 10_000; i++)
+        {
+            output = math.normalize(output);
+            // var x = math.normalize(output);
+            // output += x;
+            // x -= output;
+            // output *= x.x;
+            // output /= math.PI;
+            // output *= math.sqrt(output.x);
+
         }
     }
 
@@ -34,20 +52,37 @@ public static class MathMethods
     }
     
     
-    [BurstCompile(CompileSynchronously = true)]
-    public static void BasicMath_BurstedNewMath(ref float3 output)
+
+
+    [BurstCompile]
+    public static void BasicMath_IJob( ref float3 output)
     {
-        for (int i = 0; i < 10_000; i++)
+        var job = new BasicMath
         {
-            var x = math.normalize(output);
-            output += x;
-            x -= output;
-            output *= x.x;
-            output /= math.PI;
-            output *= math.sqrt(output.x);
+            output = output
+        };
+        job.Run();
+    }
+    
+    
+    
+    [BurstCompile]
+    public struct BasicMath : IJob
+    {
+        public float3 output;
+        public void Execute()
+        {
+            for (int i = 0; i < 10_000; i++)
+            {
+                var x = math.normalize(output);
+                output += x;
+                x -= output;
+                output *= x.x;
+                output /= math.PI;
+                output *= math.sqrt(output.x);
+            }
         }
     }
-
 
     public static void Vector3New(ref Vector3 output)
     {

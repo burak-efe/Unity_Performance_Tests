@@ -29,6 +29,17 @@ public static class RandomFiller
         }
     }
     
+    
+    public static void FillArrayFloat3(ref float3[] outArray)
+    {
+        Random rand = new Random(191919);
+        
+        for (int i = 0; i < outArray.Length; i++)
+        {
+            outArray[i] = rand.NextFloat3();
+        }
+    }
+    
     public static void FillArrayFloat3(ref Vector3[] outArray)
     {
         Random rand = new Random(191919);
