@@ -5,8 +5,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Unity.PerformanceTesting",
-        "Unity.Mathematics",
         "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Mathematics",
         "Scripts"
     ],
     "includePlatforms": [],

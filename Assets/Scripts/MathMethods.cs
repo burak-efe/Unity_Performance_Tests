@@ -12,29 +12,26 @@ public static class MathMethods
     {
         for (int i = 0; i < 10_000; i++)
         {
-            output = output.normalized;
-            // var x = Vector3.Normalize(output);
-            // output += x;
-            // x -= output;
-            // output *= x.x;
-            // output /= Mathf.PI;
-            // output *= Mathf.Sqrt(output.x);
+            var x = Vector3.Normalize(output);
+            output += x;
+            x -= output;
+            output *= x.x;
+            output /= Mathf.PI;
+            output *= Mathf.Sqrt(output.x);
         }
     }
-    
+
     [BurstCompile]
     public static void BasicMath_BurstedNewMath(ref float3 output)
     {
         for (int i = 0; i < 10_000; i++)
         {
-            output = math.normalize(output);
-            // var x = math.normalize(output);
-            // output += x;
-            // x -= output;
-            // output *= x.x;
-            // output /= math.PI;
-            // output *= math.sqrt(output.x);
-
+            var x = math.normalize(output);
+            output += x;
+            x -= output;
+            output *= x.x;
+            output /= math.PI;
+            output *= math.sqrt(output.x);
         }
     }
 
@@ -50,12 +47,10 @@ public static class MathMethods
             output *= math.sqrt(output.x);
         }
     }
-    
-    
 
 
     [BurstCompile]
-    public static void BasicMath_IJob( ref float3 output)
+    public static void BasicMath_IJob(ref float3 output)
     {
         var job = new BasicMath
         {
@@ -63,13 +58,13 @@ public static class MathMethods
         };
         job.Run();
     }
-    
-    
-    
+
+
     [BurstCompile]
     public struct BasicMath : IJob
     {
         public float3 output;
+
         public void Execute()
         {
             for (int i = 0; i < 10_000; i++)
@@ -142,4 +137,80 @@ public static class MathMethods
             outArray[i] = Vector3.SqrMagnitude(inArray[i]);
         }
     }
+
+
+    [BurstCompile]
+    public static void Float4_Array_Mul(ref NativeArray<float4> inArr, float val)
+    {
+        for (int i = 0; i < inArr.Length; i++)
+        {
+            inArr[i] *= val;
+        }
+    }
+
+    [BurstCompile]
+    public static void Float4_Array_Mul_TwoPerIteration(ref NativeArray<float4> inArr, float val)
+    {
+        for (int i = 0; i < inArr.Length; i += 2)
+        {
+            inArr[i] *= val;
+            inArr[i + 1] *= val;
+        }
+    }
+
+    [BurstCompile]
+    public static void Float_Array_Mul(ref NativeArray<float> inArr, float val)
+    {
+        for (int i = 0; i < inArr.Length; i++)
+        {
+            inArr[i] *= val;
+        }
+    }
+
+    [BurstCompile]
+    public static void Float3_Array_Mul(ref NativeArray<float3> inArr, float val)
+    {
+        for (int i = 0; i < inArr.Length; i++)
+        {
+            inArr[i] *= val;
+        }
+    }
+
+    [BurstCompile]
+    public static void IntArraySum(ref NativeArray<int> inArr, out int sum)
+    {
+        sum = 0;
+        for (int i = 0; i < inArr.Length; i++)
+        {
+            sum += inArr[i];
+        }
+    }
+
+    [BurstCompile]
+    public static void IntArraySum_8perIter(ref NativeArray<int> inArr, out int sum)
+    {
+        sum = 0;
+        for (int i = 0; i < inArr.Length; i += 8)
+        {
+            sum += inArr[i];
+            sum += inArr[i + 1];
+            sum += inArr[i + 2];
+            sum += inArr[i + 3];
+            sum += inArr[i + 4];
+            sum += inArr[i + 5];
+            sum += inArr[i + 6];
+            sum += inArr[i + 7];
+        }
+    }
+
+    // [BurstCompile]
+    // public static void IntArraySum_Intrs(ref NativeArray<int> inArr, out int sum)
+    // {
+    //     sum = 0;
+    //     for (int i = 0; i < inArr.Length; i += 8)
+    //     {
+    //         var num = new Unity.Burst.Intrinsics.v256(inArr[i], inArr[i + 1], inArr[i + 2], inArr[i + 3], inArr[i + 4], inArr[i + 5], inArr[i + 6], inArr[i + 7]);
+    //
+    //     }
+    // }
 }

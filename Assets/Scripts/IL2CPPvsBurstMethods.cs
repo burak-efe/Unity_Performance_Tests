@@ -1,8 +1,9 @@
-﻿using Unity.Burst;
+﻿
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-
+[BurstCompile]
 public class IL2CPPvsBurstMethods
 {
     public static void Vec3Add_Default(ref Vector3 output)
@@ -29,18 +30,9 @@ public class IL2CPPvsBurstMethods
             output[i] += input[i];
         }
     }
-
-    [BurstCompile]
-    public static void Vec3AddArray_Burst(ref float3[] input,ref float3[] output)
-    {
-        for (int i = 0; i < output.Length; i++)
-        {
-            output[i] += input[i];
-        }
-    }
     
     [BurstCompile]
-    public static void Vec3AddNativeArray_Burst(ref NativeArray<float3> input,ref NativeArray<float3> output)
+    public static void Vec3Add_Burst(ref NativeArray<float3> input,ref NativeArray<float3> output)
     {
         for (int i = 0; i < output.Length; i++)
         {
@@ -103,7 +95,9 @@ public class IL2CPPvsBurstMethods
     {
         for (int i = 0; i < 10_000; i++)
         {
-            output /= Vector3.Magnitude(output);
+            var dot = Vector3.Dot(output, output);
+            var length = Mathf.Sqrt(dot);
+            output /= length;
         }
     }
     
@@ -121,7 +115,9 @@ public class IL2CPPvsBurstMethods
     {
         for (int i = 0; i < 10_000; i++)
         {
-            output /= math.length(output);
+            var dot = math.dot(output, output);
+            var length = math.sqrt(dot);
+            output /= length;
         }
     }
 }

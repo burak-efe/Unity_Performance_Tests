@@ -1,20 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using Tests_1;
-using Unity.Burst;
-using Unity.Collections;
-using Unity.Mathematics;
 using Unity.PerformanceTesting;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 
 public class OtherTests
 {
-
-
-
     [Test, Performance]
     public void InliningTest()
     {
@@ -31,19 +21,29 @@ public class OtherTests
         SampleGroup group4 = new SampleGroup("BurstedInlined", SampleUnit.Nanosecond);
         Measure.Method(() => InliningMethods.BurstedInlined()).SampleGroup(group4).MeasurementCount(1000).Run();
     }
-    
 
+    [Test, Performance]
+    public void FizzBuzzTest()
+    {
+        SampleGroup naiveGroup = new SampleGroup("Naive", SampleUnit.Microsecond);
+        Measure.Method(() => FizzBuzzer.FizzBuzzNaive(1000)).SampleGroup(naiveGroup).DynamicMeasurementCount().Run();
+        
+        SampleGroup parallelJobGroup = new SampleGroup("parallelJobGroup", SampleUnit.Microsecond);
+        Measure.Method(() => {
+            var na =  FizzBuzzer.FizzBuzzParallelTempJobAlloc(1000);
+           na.Dispose();
+        }).SampleGroup(parallelJobGroup).DynamicMeasurementCount().Run();
+    }
 
-
-
-
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-//     [UnityTest]
-//     public IEnumerator NewTestScriptWithEnumeratorPasses()
-//     {
-//         // Use the Assert class to test conditions.
-//         // Use yield to skip a frame.
-//         yield return null;
-//     }
+    [Test]
+    public void FizzBuzzParallelUnit()
+    {
+        var a = FizzBuzzer.FizzBuzzNaive(1000);
+        var na =  FizzBuzzer.FizzBuzzParallelTempJobAlloc(1000);
+        for (int i = 0; i < 1000; i++)
+        {
+            Assert.IsTrue(a[i] == na[i].ToString());
+        }
+        na.Dispose();
+    }
 }

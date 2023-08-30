@@ -19,6 +19,17 @@ public static class RandomFiller
     }
     
     [BurstCompile]
+    public static void FillArrayDouble(ref NativeArray<double> outArray)
+    {
+        Random rand = new Random(191919);
+        
+        for (int i = 0; i < outArray.Length; i++)
+        {
+            outArray[i] = rand.NextDouble();
+        }
+    }
+    
+    [BurstCompile]
     public static void FillArrayFloat3(ref NativeArray<float3> outArray)
     {
         Random rand = new Random(191919);
@@ -26,6 +37,17 @@ public static class RandomFiller
         for (int i = 0; i < outArray.Length; i++)
         {
             outArray[i] = rand.NextFloat3();
+        }
+    }
+    
+    [BurstCompile]
+    public static void FillArrayFloat4(ref NativeArray<float4> outArray)
+    {
+        Random rand = new Random(191919);
+        
+        for (int i = 0; i < outArray.Length; i++)
+        {
+            outArray[i] = rand.NextFloat4();
         }
     }
     
