@@ -3,7 +3,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 
-namespace Tests_1
+namespace Ica.Benchmarks
 {
     [BurstCompile]
     public class FizzBuzzer

@@ -4,71 +4,74 @@ using Unity.Mathematics;
 using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
-[BurstCompile]
-public static class RandomFiller
+namespace Ica.Benchmarks
 {
     [BurstCompile]
-    public static void FillArrayFloat(ref NativeArray<float> outArray)
+    public static class RandomFiller
     {
-        Random rand = new Random(191919);
-        
-        for (int i = 0; i < outArray.Length; i++)
+        [BurstCompile]
+        public static void FillArrayFloat(ref NativeArray<float> outArray)
         {
-            outArray[i] = rand.NextFloat();
+            Random rand = new Random(191919);
+        
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                outArray[i] = rand.NextFloat();
+            }
         }
-    }
     
-    [BurstCompile]
-    public static void FillArrayDouble(ref NativeArray<double> outArray)
-    {
-        Random rand = new Random(191919);
-        
-        for (int i = 0; i < outArray.Length; i++)
+        [BurstCompile]
+        public static void FillArrayDouble(ref NativeArray<double> outArray)
         {
-            outArray[i] = rand.NextDouble();
+            Random rand = new Random(191919);
+        
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                outArray[i] = rand.NextDouble();
+            }
         }
-    }
     
-    [BurstCompile]
-    public static void FillArrayFloat3(ref NativeArray<float3> outArray)
-    {
-        Random rand = new Random(191919);
-        
-        for (int i = 0; i < outArray.Length; i++)
+        [BurstCompile]
+        public static void FillArrayFloat3(ref NativeArray<float3> outArray)
         {
-            outArray[i] = rand.NextFloat3();
+            Random rand = new Random(191919);
+        
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                outArray[i] = rand.NextFloat3();
+            }
         }
-    }
     
-    [BurstCompile]
-    public static void FillArrayFloat4(ref NativeArray<float4> outArray)
-    {
-        Random rand = new Random(191919);
-        
-        for (int i = 0; i < outArray.Length; i++)
+        [BurstCompile]
+        public static void FillArrayFloat4(ref NativeArray<float4> outArray)
         {
-            outArray[i] = rand.NextFloat4();
+            Random rand = new Random(191919);
+        
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                outArray[i] = rand.NextFloat4();
+            }
         }
-    }
     
     
-    public static void FillArrayFloat3(ref float3[] outArray)
-    {
-        Random rand = new Random(191919);
-        
-        for (int i = 0; i < outArray.Length; i++)
+        public static void FillArrayFloat3(ref float3[] outArray)
         {
-            outArray[i] = rand.NextFloat3();
+            Random rand = new Random(191919);
+        
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                outArray[i] = rand.NextFloat3();
+            }
         }
-    }
     
-    public static void FillArrayFloat3(ref Vector3[] outArray)
-    {
-        Random rand = new Random(191919);
-        
-        for (int i = 0; i < outArray.Length; i++)
+        public static void FillArrayFloat3(ref Vector3[] outArray)
         {
-            outArray[i] = rand.NextFloat3();
+            Random rand = new Random(191919);
+        
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                outArray[i] = rand.NextFloat3();
+            }
         }
     }
 }

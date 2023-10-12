@@ -1,6 +1,6 @@
 {
-    "name": "Tests_Other",
-    "rootNamespace": "",
+    "name": "Ica.Benchmarks.PerformanceTests",
+    "rootNamespace": "Ica.Benchmarks.PerformanceTests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
@@ -8,7 +8,7 @@
         "Unity.Burst",
         "Unity.Collections",
         "Unity.Mathematics",
-        "Scripts"
+        "Ica.Benchmarks"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
