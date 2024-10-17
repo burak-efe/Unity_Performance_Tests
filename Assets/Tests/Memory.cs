@@ -1,21 +1,35 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Unity.Collections;
 using Unity.PerformanceTesting;
 
 
 namespace Ica.Benchmarks.PerformanceTests
 {
-    public class Memory
+    public unsafe class Memory
     {
-        // [Test, Performance]
-        // public void Native_Collection_Allocation_Bursted_vs_NonBursted()
-        // {
-        //     SampleGroup group1 = new SampleGroup("non bursted temp collection", SampleUnit.Microsecond);
-        //     Measure.Method(() => MemoryMethods.AllocTempUninitialized_NonBursted(10_000_000)).SampleGroup(group1).MeasurementCount(100).Run();
-        //
-        //     SampleGroup group2 = new SampleGroup("bursted temp collection", SampleUnit.Microsecond);
-        //     Measure.Method(() => MemoryMethods.AllocTemp(10_000_000)).SampleGroup(group2).MeasurementCount(100).Run();
-        // }
+        [Test, Performance]
+        public void SmallAllocation_NativeVsSpan()
+        {
+            SampleGroup group1 = new SampleGroup("native temp alloc", SampleUnit.Microsecond);
+            Measure.Method(() =>
+            {
+                for (int i = 0; i < 10000; i++)
+                {
+                    var na = new NativeArray<int>(8, Allocator.Temp);
+                }
+            }).SampleGroup(group1).MeasurementCount(10).Run();
+
+            SampleGroup group2 = new SampleGroup("span alloc", SampleUnit.Microsecond);
+            Measure.Method(() =>
+                {
+                    for (int i = 0; i < 10000; i++)
+                    {
+                        var testSpan = stackalloc int[10];
+                    }
+                }
+            ).SampleGroup(group2).MeasurementCount(10).Run();
+        }
 
         [Test, Performance]
         public void Collection_Allocation_NativeInitialized_vs_NativeUninitialized_vs_Managed()
